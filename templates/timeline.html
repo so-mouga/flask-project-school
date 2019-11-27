@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		.gaz{
+			margin: 10px auto;
+			border:1px solid black;
+		}
+	</style>
+</head>
+<body>
+	{% for g in gaz %}
+	<div id="gazouille-{{loop.index}}" class="gaz">
+		<div>{{g.user}}</div>
+		<div>{{g.text}}</div>
+	</div>
+	{% endfor %}
+</body>
+</html>
