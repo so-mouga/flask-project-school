@@ -26,8 +26,7 @@ SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostnam
 app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
 app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-db.drop_all()
-db.create_all()
+
 
 @app.route('/')
 def home():
