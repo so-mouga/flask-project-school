@@ -1,6 +1,5 @@
 from flask import Flask, request, render_template, redirect, url_for
 import csv
-import logging as lg
 
 from flask_sqlalchemy import SQLAlchemy
 
@@ -24,7 +23,7 @@ test = []
 
 SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
     username="mouga",
-    password="ipssi2018",
+    password="ipssi2019",
     hostname="mouga.mysql.pythonanywhere-services.com",
     databasename="mouga$twitter",
 )
