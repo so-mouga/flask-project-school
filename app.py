@@ -1,8 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for
 import csv
-
 from flask_sqlalchemy import SQLAlchemy
-
 
 # db variable initialization
 app = Flask(__name__, instance_relative_config=True)
@@ -15,13 +13,25 @@ db = SQLAlchemy(app)
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
+    nickename = db.Column(db.String(4096))
     email = db.Column(db.String(4096))
     password = db.Column(db.String(4096))
+    tweet = db.relationship('Tweet')
 
-class tweet(db.Model):
+    def __init__(self, email, nickename, password):
+        self.email = email
+        self.password = password
+        self.nickename = nickename
+
+class Tweet(db.Model):
     __tablename__ = 'tweet'
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(4096))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def __init__(self, content, user_id):
+        self.content = content
+        self.user_id = user_id
 
 SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
     username="mouga",
@@ -35,10 +45,20 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.drop_all()
 db.create_all()
 
+db.session.add(User("ipssi@gmail.com", 'ipssi', 'test'))
+db.session.add(User("kevin@gmail.com", 'kevin', 'test'))
+
+db.session.add(Tweet("lorem ippsu", 1))
+db.session.add(Tweet("Hello Word", 1))
+db.session.add(Tweet("test 1", 2))
+db.session.add(Tweet("Hello Word", 2))
+
+db.session.commit()
+
 
 @app.route('/')
 def home():
-    return 'Bienvenue!'
+    return 'Bienvenddue!'
 
 
 @app.route('/gaz', methods=['GET', 'POST'])
