@@ -18,6 +18,11 @@ class User(db.Model):
     email = db.Column(db.String(4096))
     password = db.Column(db.String(4096))
 
+class tweet(db.Model):
+    __tablename__ = 'tweet'
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.String(4096))
+
 SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
     username="mouga",
     password="ipssi2019",
