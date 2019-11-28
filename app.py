@@ -10,16 +10,12 @@ app.config["DEBUG"] = True
 
 app.config.from_pyfile('config.py')
 db = SQLAlchemy(app)
-db.drop_all()
-db.create_all()
 
-class Test(db.Model):
-    __tablename__ = 'test'
+class User(db.Model):
+    __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String(4096))
-
-
-test = []
+    email = db.Column(db.String(4096))
+		password = db.Column(db.String(4096))
 
 SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
     username="mouga",
@@ -30,7 +26,8 @@ SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostnam
 app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
 app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
+db.drop_all()
+db.create_all()
 
 @app.route('/')
 def home():
