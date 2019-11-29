@@ -1,21 +1,17 @@
+import csv, sys, os, pprint
 from flask import Flask, request, render_template, redirect, url_for
-import csv
 from flask_sqlalchemy import SQLAlchemy
-import os
-import pprint
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.orm.exc import MultipleResultsFound
-# sys.path.append('/home/mouga/.local/lib/python3.7/site-packages')
-from flask_cors import CORS
 
 # db variable initialization
 app = Flask(__name__, instance_relative_config=True)
 app.config["DEBUG"] = True
+app.url_map.strict_slashes = False
 
 app.config.from_pyfile('config.py')
 db = SQLAlchemy(app)
 
-CORS(app, resources=r'/*')
 class User(db.Model):
   __tablename__ = 'user'
   id = db.Column(db.Integer, primary_key=True)
@@ -58,15 +54,18 @@ db.session.commit()
 def add_header(response):
     header = response.headers
     response.cache_control.max_age = 300
-    header['Access-Control-Allow-Origin'] = '*'
+    header['Access-Control-Allow-Origin'] = [
+        '195.154.176.62',
+        '80.15.154.187'
+    ]
     return response
 
 @app.route('/')
 def home():
-  return 'Hello'
+  return 'Bienvenue'
 
 
-@app.route('/timeline/<nickename>', methods=['GET'])
+@app.route('/timeline/<nickename>/', methods=['GET'])
 def timeline_user(nickename):
   try:
     user = db.session.query(User).filter(User.nickename == nickename).one()
@@ -91,7 +90,7 @@ def save_gazouille():
     return render_template('formulaire.html')
 
 
-@app.route('/timeline', methods=['GET'])
+@app.route('/timeline/', methods=['GET'])
 def timeline():
   tweets = Tweet.query.all()
   gaz = []
