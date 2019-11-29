@@ -1,3 +1,5 @@
+The project have been created by Kevin Mougammadaly and Abel Labylle (Odealame).
+
 ## Description
 
 Flgaz-riz is an application to post some messages, we can post and read the message from another user we don't need some account to use is.
