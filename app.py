@@ -58,14 +58,28 @@ db.session.commit()
 
 @app.route('/')
 def home():
-    return 'Bienvenddue!'
+    return 'test'
 
+@app.route('/timeline/<nickename>', methods=['GET'])
+def timeline_user(nickename):
+    #user = db.session(User).filter_by(nickename=nickename)
+
+    #if user:
+    #    tweets = Tweet.query.get(user.id)
+    #    gaz = []
+
+    #    for p in tweets:
+    #        gaz.append(p)
+
+    #    return render_template("timeline.html", gaz=gaz)
+    return nickename
 
 @app.route('/gaz', methods=['GET', 'POST'])
 def save_gazouille():
     if request.method == 'POST':
-        print(request.form)
-        dump_to_csv(request.form)
+        if len(request.form.get("user-text")) <= 280:
+            print(request.form)
+            dump_to_csv(request.form)
         return redirect(url_for('timeline'))
         # return "OK"
     if request.method == 'GET':
