@@ -1,3 +1,28 @@
+## Description
+
+Flgaz-riz is an application to post some messages, we can post and read the message from another user we don't need some account to use is.
+
+## Global prerequisites
+
+You will need to have python 3.7, the data is sqlite.
+
+## Installation
+
+Clone the Git repository on the develop branch for development environment:
+
+```bash
+$ git clone https://github.com/so-mouga/flask-project-school.git
+```
+
+Very simple, only a few steps to execute from your terminal:
+
+1. create an environment python 3 : `virtualenv -ppython3 venv`
+2. activate the environment :
+  - mac/linux: `source venv/bin/activate`
+  - windows: `venv\Scripts\activate`
+3. install the dependencies :`pip install -r requirements.txt`
+4. run the application: `flask run`
+
 ## The project:
 
 - Flgaz is a web application written with Python, the entry point of the application is app.py.

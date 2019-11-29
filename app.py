@@ -1,8 +1,8 @@
-import csv, sys, os, pprint
+import csv, sys, os
 from flask import Flask, request, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm.exc import NoResultFound
-from sqlalchemy.orm.exc import MultipleResultsFound
+import datetime
 
 # db variable initialization
 app = Flask(__name__, instance_relative_config=True)
@@ -26,6 +26,8 @@ class Tweet(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   content = db.Column(db.String(4096))
   user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+  created_at = db.Column(db.DateTime(), default=datetime.datetime.utcnow)
+  ip_user_posted = db.Column(db.String(4096))
 
   def __init__(self, content, user_id):
     self.content = content
@@ -111,11 +113,11 @@ def parse_from_csv():
 
 
 def dump_to_csv(d):
-  donnees = [d["user-name"], d["user-text"]]
+  # donnees = [d["user-name"], d["user-text"]]
   try:
     user = db.session.query(User).filter(
         User.nickename == d["user-name"]).one()
-    db.session.add(Tweet(d["user-text"], user.id))
+    db.session.add(Tweet(d["user-text"].replace('barre', '*****'), user.id))
     db.session.commit()
   except NoResultFound:
     # create user noit exist
@@ -125,5 +127,5 @@ def dump_to_csv(d):
     # save user's tweet
     user = db.session.query(User).filter(
         User.nickename == d["user-name"]).one()
-    db.session.add(Tweet(d["user-text"], user.id))
+    db.session.add(Tweet(d["user-text"].replace('barre', '*****'), user.id))
     db.session.commit()
